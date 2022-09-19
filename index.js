@@ -33,12 +33,6 @@ let notes = [
   }
 ]
 
-// const app = http.createServer((request, response) => {
-//   response.writeHead(200, { 'Content-Type': 'application/json' })
-//   // response.end('Hello World')
-//   response.end(JSON.stringify(notas))
-// })
-
 app.get('/', (request, response) => {
   response.send('<h1>Hello World</h1>')
 })
@@ -103,7 +97,8 @@ app.use((request, response) => {
   response.status(404).json({ error: 'Not Found' })
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
