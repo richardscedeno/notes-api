@@ -12,6 +12,11 @@ const initialNotes = [
     content: 'Camino hacia fullsatack',
     date: new Date(),
     important: true
+  },
+  {
+    content: 'Otro',
+    date: new Date(),
+    important: false
   }
 ]
 
