@@ -1,0 +1,29 @@
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 246
+ETag: W/"f6-iYklUE3pplplBhMWFDwnl3uWqAg"
+Date: Thu, 06 Oct 2022 07:39:21 GMT
+Connection: close
+
+[
+  {
+    "username": "whoami",
+    "name": "Jose",
+    "notes": [],
+    "id": "633e85e76107ad693051827b"
+  },
+  {
+    "username": "chardsdev",
+    "name": "Richards",
+    "notes": [],
+    "id": "633e86006107ad693051827f"
+  },
+  {
+    "username": "user",
+    "name": "Usuario",
+    "notes": [],
+    "id": "633e861c6107ad6930518283"
+  }
+]

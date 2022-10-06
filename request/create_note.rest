@@ -2,8 +2,9 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-  "content": "3ra nota para db-test",
-  "important": false
+  "content": "Pronto sale bleach :3",
+  "important": true,
+  "userId": "633e86006107ad693051827f"
 }
 
 ####

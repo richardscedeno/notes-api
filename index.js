@@ -10,6 +10,7 @@ const NotFound = require('./middleware/NotFound')
 const handleErrors = require('./middleware/handleErrors')
 
 const usersRouter = require('./controllers/users')
+const User = require('./models/User')
 
 const app = express()
 
@@ -24,7 +25,10 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/notes', async (request, response) => {
-  const notes = await Note.find({})
+  const notes = await Note.find({}).populate('userId', {
+    username: 1,
+    name: 1
+  })
   response.json(notes)
 })
 
@@ -70,18 +74,22 @@ app.delete('/api/notes/:id', async (request, response, next) => {
 })
 
 app.post('/api/notes', async (request, response, next) => {
-  const note = request.body
+  const { content, important = false, userId } = request.body
 
-  if (!note || !note.content) {
+  const user = await User.findById(userId)
+
+  if (!content) {
     return response.status(400).json({
-      error: 'note.content is missing'
+      error: 'required "content" field is missing'
     })
   }
 
+  console.log('user-id: ', user._id)
   const newNote = new Note({
-    content: note.content,
+    content,
     date: new Date(),
-    important: note.important || false
+    important,
+    userId: user._id
   })
 
   // newNote.save()
@@ -91,6 +99,10 @@ app.post('/api/notes', async (request, response, next) => {
 
   try {
     const savedNote = await newNote.save()
+
+    user.notes = user.notes.concat(savedNote._id)
+    await user.save()
+
     response.json(savedNote)
   } catch (error) {
     next(error)
