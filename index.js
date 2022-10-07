@@ -10,6 +10,9 @@ const NotFound = require('./middleware/NotFound')
 const handleErrors = require('./middleware/handleErrors')
 
 const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
+const jwt = require('jsonwebtoken')
+
 const User = require('./models/User')
 
 const app = express()
@@ -74,8 +77,22 @@ app.delete('/api/notes/:id', async (request, response, next) => {
 })
 
 app.post('/api/notes', async (request, response, next) => {
-  const { content, important = false, userId } = request.body
+  const { content, important = false } = request.body
 
+  const authorization = request.get('authorization')
+  let token = ''
+
+  if (authorization && authorization.toLowerCase().startsWith('bearer')) {
+    token = authorization.substring(7)
+  }
+
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+
+  const { id: userId } = decodedToken
   const user = await User.findById(userId)
 
   if (!content) {
@@ -110,6 +127,7 @@ app.post('/api/notes', async (request, response, next) => {
 })
 
 app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 app.use(NotFound)
 app.use(handleErrors)

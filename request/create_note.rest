@@ -1,10 +1,10 @@
 POST http://localhost:3001/api/notes 
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2U4NjAwNjEwN2FkNjkzMDUxODI3ZiIsInVzZXJuYW1lIjoiY2hhcmRzZGV2IiwiaWF0IjoxNjY1MDk4MDkxfQ.BEN3AP_LBSWRo0f7Pp9yyLb_KI8mclLcXIYFViQIT7Y
 
 {
-  "content": "Pronto sale bleach :3",
-  "important": true,
-  "userId": "633e86006107ad693051827f"
+  "content": "Bleach",
+  "important": true
 }
 
 ####
